@@ -1,0 +1,129 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@plugin "daisyui/theme" {
+  name: "hoh";
+  default: true;
+  prefersdark: false;
+  color-scheme: dark;
+
+  --color-base-100: #10203a;
+  --color-base-200: #0c1a30;
+  --color-base-300: #0a1424;
+  --color-base-content: #e2e8f0;
+
+  --color-primary: #f5c518;
+  --color-primary-content: #0a1424;
+
+  --color-secondary: #d4af37;
+  --color-secondary-content: #0a1424;
+
+  --color-accent: #fbbf24;
+  --color-accent-content: #0a1424;
+
+  --color-neutral: #0a1424;
+  --color-neutral-content: #e2e8f0;
+
+  --color-info: #38bdf8;
+  --color-info-content: #082f49;
+  --color-success: #34d399;
+  --color-success-content: #022c22;
+  --color-warning: #fbbf24;
+  --color-warning-content: #1c1000;
+  --color-error: #f87171;
+  --color-error-content: #450a0a;
+}
+
+html {
+  color-scheme: dark;
+}
+
+@layer base {
+  :root {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-optical-sizing: auto;
+  }
+
+  body {
+    @apply min-h-screen bg-base-300 text-gray-100 antialiased;
+    line-height: 1.6;
+  }
+}
+
+@layer components {
+  .input-modern {
+    @apply rounded-lg border border-slate-600 bg-slate-900 px-4 py-3 text-sm text-slate-100 shadow-sm transition placeholder:text-slate-500 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/30 focus:outline-none;
+  }
+
+  .input-modern-error {
+    @apply border-red-400 focus:border-red-400 focus:ring-red-400/30;
+  }
+
+  .field-error {
+    @apply mt-1.5 text-xs font-medium text-red-400;
+  }
+
+  .btn-primary-modern {
+    @apply rounded-lg bg-amber-400 font-medium text-slate-900 shadow-sm;
+    transition:
+      transform 120ms cubic-bezier(0.2, 0, 0, 1),
+      background-color 150ms ease,
+      box-shadow 150ms ease;
+  }
+  .btn-primary-modern:hover {
+    @apply bg-amber-300 shadow-md;
+  }
+  .btn-primary-modern:active {
+    transform: scale(0.96);
+  }
+
+  .btn-secondary-modern {
+    @apply rounded-lg border border-slate-600 bg-slate-900 font-medium text-amber-300 shadow-sm;
+    transition:
+      transform 120ms cubic-bezier(0.2, 0, 0, 1),
+      background-color 150ms ease,
+      box-shadow 150ms ease;
+  }
+  .btn-secondary-modern:hover {
+    @apply bg-slate-800 shadow-md;
+  }
+  .btn-secondary-modern:active {
+    transform: scale(0.96);
+  }
+
+  .card-modern {
+    @apply rounded-2xl border border-slate-700 bg-base-100 shadow-sm;
+  }
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.toast-enter {
+  animation: toast-in 180ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary-modern:active,
+  .btn-secondary-modern:active {
+    transform: none;
+  }
+
+  .modal-box {
+    transition-property: opacity;
+    transition-duration: 150ms;
+  }
+
+  .toast-enter {
+    animation-name: none;
+    transition: opacity 150ms ease;
+  }
+}
