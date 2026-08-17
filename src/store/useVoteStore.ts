@@ -68,7 +68,7 @@ export const selectResult = (state: VoteState): Result => {
 
   return {
     totalVotes: Object.keys(votingRecord).length,
-    winner,
+    winner: isTied ? "No winner yet" : winner,
     winnerVotes: winner ? (tally[winner] ?? 0) : 0,
     isTied,
   };

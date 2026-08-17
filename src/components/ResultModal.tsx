@@ -5,20 +5,20 @@ import { useVoteStore, selectResult } from "../store/useVoteStore";
 const capitalize = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
 
 interface ResultModalProps {
-  open: boolean;
+  isOpen: boolean;
   onClose: () => void;
 }
 
-export default function ResultModal({ open, onClose }: ResultModalProps) {
+export default function ResultModal({ isOpen, onClose }: ResultModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const result = useVoteStore(useShallow(selectResult));
 
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
-    if (open && !dialog.open) dialog.showModal();
-    if (!open && dialog.open) dialog.close();
-  }, [open]);
+    if (isOpen && !dialog.open) dialog.showModal();
+    if (!isOpen && dialog.open) dialog.close();
+  }, [isOpen]);
 
   const winner = result.winner;
 
@@ -31,7 +31,9 @@ export default function ResultModal({ open, onClose }: ResultModalProps) {
       }}
       onClose={onClose}
     >
-      <div className="modal-box" onClick={(event) => event.stopPropagation()}>
+
+      {/* Stop clicks inside modal from propagating to parent dialog close handler */}
+      <div className="modal-box" onClick={(event) => event.stopPropagation()}>    
         <h3 className="text-2xl font-bold tracking-tight text-slate-100">Election Result</h3>
 
         <div className="mt-6 space-y-4">
@@ -50,7 +52,7 @@ export default function ResultModal({ open, onClose }: ResultModalProps) {
           </div>
 
           <div className="flex items-center justify-between rounded-lg bg-slate-800/60 p-4">
-            <span className="text-sm font-medium text-slate-400">Votes</span>
+            <span className="text-sm font-medium text-slate-400">Winner's Votes</span>
             <span className="font-bold text-slate-100">
               {winner ? String(result.winnerVotes) : "0"}
             </span>
