@@ -88,7 +88,7 @@ export default function App() {
         </div>
       </div>
 
-      <ResultModal open={isResultOpen} onClose={() => setIsResultOpen(false)} />
+      <ResultModal isOpen={isResultOpen} onClose={() => setIsResultOpen(false)} />
 
       <ConfirmModal
         open={confirmState.open}
