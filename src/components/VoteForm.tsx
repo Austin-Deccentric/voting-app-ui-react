@@ -8,19 +8,25 @@ interface VoteFormProps {
 }
 
 export default function VoteForm({ showToast }: VoteFormProps) {
+  // subscribe to the needed slices from the store
   const candidates = useVoteStore((state) => state.candidates);
   const castVote = useVoteStore((state) => state.castVote);
+
   const [voterName, setVoterName] = useState("");
   const [candidate, setCandidate] = useState("");
-  const [errors, setErrors] = useState<{ name?: string; candidate?: string }>({});
+  const [errors, setErrors] = useState<{ name?: string; candidate?: string }>({}); // error.name to target name input, error.candidate to target candidate selection 
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // Client-side validation: collect any validation errors
+    // - Voter name must not be empty
+    // - A candidate must be selected
+    // Exit early if validation fails to prevent form submission
     const nextErrors: { name?: string; candidate?: string } = {};
     if (!voterName.trim()) nextErrors.name = "Please enter your name.";
     if (!candidate) nextErrors.candidate = "Please choose a candidate.";
-    setErrors(nextErrors);
+    setErrors(nextErrors); // set the error object that is used to alert the user
     if (nextErrors.name || nextErrors.candidate) return;
 
     const vote = castVote(voterName, candidate);
@@ -31,6 +37,8 @@ export default function VoteForm({ showToast }: VoteFormProps) {
       setErrors({});
     } else if (vote.reason === "already-voted") {
       setErrors({ name: "This voter has already voted." });
+    } else if (vote.reason === "invalid-candidate") {
+      setErrors({candidate: "This is not a valid candidate"})
     }
   };
 
@@ -49,7 +57,7 @@ export default function VoteForm({ showToast }: VoteFormProps) {
             value={voterName}
             onChange={(e) => {
               setVoterName(e.target.value);
-              if (errors.name) setErrors((current) => ({ ...current, name: undefined }));
+              if (errors.name) setErrors((current) => ({ ...current, name: undefined})); // resets the only the name property of error as soon you start typing.
             }}
             aria-invalid={Boolean(errors.name)}
             className={`input-modern w-full ${errors.name ? "input-modern-error" : ""}`}
