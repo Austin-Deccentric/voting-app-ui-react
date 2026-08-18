@@ -2,7 +2,7 @@
 
 A simple voting application built with **React 19**, **TypeScript**, **Tailwind CSS v4**, and **Zustand**. Voters enter their name, pick a candidate, and submit one vote each. Results — including tie detection — are shown in a modal, and all state persists to `localStorage` so votes survive page refreshes.
 
-This is a React port of the original vanilla TypeScript [voting-app-ui](../voting-app-ui), keeping the same core voting logic while moving state management into a persistent Zustand store.
+This is a React port of the original vanilla TypeScript [voting-app-ui](https://github.com/Austin-Deccentric/voting-app-ui), keeping the same core voting logic while moving state management into a persistent Zustand store.
 
 ## Features
 
